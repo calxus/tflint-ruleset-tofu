@@ -17,6 +17,7 @@ func main() {
 				rules.NewTerraformVariableAttributesBeforeValidationRulesRule(),
 				rules.NewTerraformVariableValidationRuleSeparationRule(),
 				rules.NewTerraformVariableValidationRuleAttributeOrderRule(),
+				rules.NewTerraformResourceHeaderAttributeOrderRule(),
 			},
 		},
 	})
