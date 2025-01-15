@@ -68,29 +68,52 @@ func (r *TerraformResourceHeaderAttributeOrderRule) Check(runner tflint.Runner) 
 			sorted_attrs := SortAttributesByStartLine(attrs)
 			if (AttributesContains(sorted_attrs, "provider")) {
 				if (sorted_attrs[0].Name != "provider") {
+					i := GetAttributeIndex(sorted_attrs, "provider")
 					runner.EmitIssue(
 						r,
-						fmt.Sprintf("The provider meta-argument must be the first attribute in resource definition if present"),
-						sorted_attrs[0].Range,
+						fmt.Sprintf("The provider meta-argument must be the first attribute in resource definition"),
+						sorted_attrs[i].Range,
 					);
 					continue
 				}
-				if (AttributesContains(sorted_attrs, "count") || AttributesContains(sorted_attrs, "for_each")) {
-					if !((sorted_attrs[1].Name == "count") || (sorted_attrs[1].Name == "for_each")) {
+				if (AttributesContains(sorted_attrs, "count")) {
+					if (sorted_attrs[1].Name != "count") {
+						i := GetAttributeIndex(sorted_attrs, "count")
 						runner.EmitIssue(
 							r,
-							fmt.Sprintf("The count/for_each meta-arguments must appear after the provider meta-argument if present"),
-							sorted_attrs[1].Range,
+							fmt.Sprintf("The count meta-argument must appear directly after the provider meta-argument"),
+							sorted_attrs[i].Range,
+						);
+						continue
+					} 
+				} else if (AttributesContains(sorted_attrs, "for_each")) {
+					if (sorted_attrs[1].Name != "for_each") {
+						i := GetAttributeIndex(sorted_attrs, "for_each")
+						runner.EmitIssue(
+							r,
+							fmt.Sprintf("The for_each meta-argument must appear directly after the provider meta-argument"),
+							sorted_attrs[i].Range,
 						);
 						continue
 					}
 				}
-			} else if (AttributesContains(sorted_attrs, "count") || AttributesContains(sorted_attrs, "for_each")) {
-				if !((sorted_attrs[0].Name == "count") || (sorted_attrs[0].Name == "for_each")) {
+			} else if (AttributesContains(sorted_attrs, "count")) {
+				if (sorted_attrs[0].Name != "count") {
+					i := GetAttributeIndex(sorted_attrs, "count")
 					runner.EmitIssue(
 						r,
-						fmt.Sprintf("The count/for_each meta-arguments must be defined at the top of the resource definition"),
-						sorted_attrs[0].Range,
+						fmt.Sprintf("The count meta-argument must be defined at the top of the resource definition"),
+						sorted_attrs[i].Range,
+					);
+					continue
+				} 
+			} else if (AttributesContains(sorted_attrs, "for_each")) {
+				if (sorted_attrs[0].Name != "for_each") {
+					i := GetAttributeIndex(sorted_attrs, "for_each")
+					runner.EmitIssue(
+						r,
+						fmt.Sprintf("The for_each meta-argument must be defined at the top of the resource definition"),
+						sorted_attrs[i].Range,
 					);
 					continue
 				}
@@ -98,6 +121,15 @@ func (r *TerraformResourceHeaderAttributeOrderRule) Check(runner tflint.Runner) 
 		}
 	}
 	return nil
+}
+
+func GetAttributeIndex(attributes []*hcl.Attribute, attribute string) int {
+	for i := range attributes {
+		if (attributes[i].Name == attribute) {
+			return i
+		}
+	}
+	return -1
 }
 
 func SortAttributesByStartLine(attributes hcl.Attributes) []*hcl.Attribute {

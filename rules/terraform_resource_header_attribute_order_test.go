@@ -71,16 +71,16 @@ resource "aws_instance" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewTerraformResourceHeaderAttributeOrderRule(),
-					Message: "The provider meta-argument must be the first attribute in resource definition if present",
+					Message: "The provider meta-argument must be the first attribute in resource definition",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   3,
+							Line:   4,
 							Column: 3,
 						},
 						End: hcl.Pos{
-							Line:   3,
-							Column: 33,
+							Line:   4,
+							Column: 30,
 						},
 					},
 				},},
@@ -96,16 +96,16 @@ resource "aws_instance" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewTerraformResourceHeaderAttributeOrderRule(),
-					Message: "The count/for_each meta-arguments must be defined at the top of the resource definition",
+					Message: "The count meta-argument must be defined at the top of the resource definition",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   3,
+							Line:   4,
 							Column: 3,
 						},
 						End: hcl.Pos{
-							Line:   3,
-							Column: 33,
+							Line:   4,
+							Column: 20,
 						},
 					},
 				},},
@@ -121,16 +121,16 @@ resource "aws_instance" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewTerraformResourceHeaderAttributeOrderRule(),
-					Message: "The count/for_each meta-arguments must be defined at the top of the resource definition",
+					Message: "The for_each meta-argument must be defined at the top of the resource definition",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   3,
+							Line:   4,
 							Column: 3,
 						},
 						End: hcl.Pos{
-							Line:   3,
-							Column: 33,
+							Line:   4,
+							Column: 34,
 						},
 					},
 				},},
@@ -147,16 +147,16 @@ resource "aws_instance" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewTerraformResourceHeaderAttributeOrderRule(),
-					Message: "The provider meta-argument must be the first attribute in resource definition if present",
+					Message: "The provider meta-argument must be the first attribute in resource definition",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   3,
+							Line:   4,
 							Column: 3,
 						},
 						End: hcl.Pos{
-							Line:   3,
-							Column: 20,
+							Line:   4,
+							Column: 30,
 						},
 					},
 				},},
