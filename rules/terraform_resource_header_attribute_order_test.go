@@ -100,12 +100,12 @@ resource "aws_instance" "example" {
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   4,
+							Line:   3,
 							Column: 3,
 						},
 						End: hcl.Pos{
-							Line:   4,
-							Column: 20,
+							Line:   3,
+							Column: 33,
 						},
 					},
 				},},
@@ -125,12 +125,12 @@ resource "aws_instance" "example" {
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   4,
+							Line:   3,
 							Column: 3,
 						},
 						End: hcl.Pos{
-							Line:   4,
-							Column: 34,
+							Line:   3,
+							Column: 33,
 						},
 					},
 				},},

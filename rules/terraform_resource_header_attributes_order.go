@@ -90,7 +90,7 @@ func (r *TerraformResourceHeaderAttributeOrderRule) Check(runner tflint.Runner) 
 					runner.EmitIssue(
 						r,
 						fmt.Sprintf("The count/for_each meta-arguments must be defined at the top of the resource definition"),
-						sorted_attrs[1].Range,
+						sorted_attrs[0].Range,
 					);
 					continue
 				}
